@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FisherUI", "FisherUI\FisherUI.csproj", "{6C401EB8-12A9-4CB3-981B-2A2B75846920}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptureScreen", "CaptureScreen\CaptureScreen.csproj", "{D745144A-31C1-4942-BCB4-0B30937A917E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageAnalyze", "ImageAnalyze\ImageAnalyze.csproj", "{F899178C-A0A4-457C-90B5-3295F2020D0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C401EB8-12A9-4CB3-981B-2A2B75846920}.Debug|x86.ActiveCfg = Debug|x86
+		{6C401EB8-12A9-4CB3-981B-2A2B75846920}.Debug|x86.Build.0 = Debug|x86
+		{6C401EB8-12A9-4CB3-981B-2A2B75846920}.Release|x86.ActiveCfg = Release|x86
+		{6C401EB8-12A9-4CB3-981B-2A2B75846920}.Release|x86.Build.0 = Release|x86
+		{D745144A-31C1-4942-BCB4-0B30937A917E}.Debug|x86.ActiveCfg = Debug|x86
+		{D745144A-31C1-4942-BCB4-0B30937A917E}.Debug|x86.Build.0 = Debug|x86
+		{D745144A-31C1-4942-BCB4-0B30937A917E}.Release|x86.ActiveCfg = Release|x86
+		{D745144A-31C1-4942-BCB4-0B30937A917E}.Release|x86.Build.0 = Release|x86
+		{F899178C-A0A4-457C-90B5-3295F2020D0E}.Debug|x86.ActiveCfg = Debug|x86
+		{F899178C-A0A4-457C-90B5-3295F2020D0E}.Debug|x86.Build.0 = Debug|x86
+		{F899178C-A0A4-457C-90B5-3295F2020D0E}.Release|x86.ActiveCfg = Release|x86
+		{F899178C-A0A4-457C-90B5-3295F2020D0E}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
