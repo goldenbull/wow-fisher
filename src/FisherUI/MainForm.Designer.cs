@@ -122,7 +122,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.ShowIcon = false;
-            this.Text = "我是盗号木马！";
+            this.Text = "钓鱼吧！";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.picBox截屏)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num阈值)).EndInit();
