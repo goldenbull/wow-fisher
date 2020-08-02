@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using AForge.Imaging;
 using AForge.Imaging.Filters;
+using AForge.Math;
 
 namespace FisherUI
 {
@@ -167,29 +172,66 @@ namespace FisherUI
 
             var grayscaleBMP = Grayscale.CommonAlgorithms.RMY.Apply(m_bmpForBait);
             sobel.ApplyInPlace(grayscaleBMP);
+            // SaveImage(grayscaleBMP);
             return grayscaleBMP;
         }
 
         /// <summary>
+        /// 用于测试。图片以及相应的统计信息写文件
+        /// </summary>
+        private long seq = DateTime.Now.Ticks;
+
+        private void SaveImage(Bitmap bmp)
+        {
+            seq++;
+            var fname = $@"D:\tmp\images\{seq}.bmp";
+            bmp.Save(fname);
+
+            var s = new ImageStatistics(bmp);
+            var v = new VerticalIntensityStatistics(bmp);
+            var h = new HorizontalIntensityStatistics(bmp);
+            File.AppendAllText(
+                @"D:\tmp\images\stat.csv",
+                $"{seq},"
+                + $"{s.Gray.Mean},{s.Gray.StdDev},"
+                + $"{v.Gray.Mean},{v.Gray.StdDev},"
+                + $"{h.Gray.Mean},{h.Gray.StdDev},"
+                + "\r\n");
+        }
+
+        /// <summary>
         /// 开始用图像识别的办法等待上钩事件，包括了右键点击收杆
+        /// 计算图片的VerticalIntensityStatistics.Mean，用过去N张图片的这个值的均值作为基准
+        /// 当前图片的这个值离均值的偏差超过一个阈值，则认为事件发生
         /// </summary>
         private void WaitForFish()
         {
             ShowStatus("等待鱼儿上钩……");
 
-            // 截获第一幅图作为标准
-            var img0 = CaptureScreen();
+            // 保存过去N个值
+            const int N = 100;
+            var queue = new Queue<double>(N * 2);
 
             // 不停的截图，比较指标差异，超过时间则退出
             while (DateTime.Now - m_下钩时刻 < new TimeSpan(0, 0, 25))
             {
                 var img = CaptureScreen();
-                var diff = CalcImgDiff(img0, img);
+
+                // 统计表明v_mean是最有效的指标
+                var vs = new VerticalIntensityStatistics(img);
+                var val = vs.Gray.Mean;
+                queue.Enqueue(val);
+                if (queue.Count > N)
+                    queue.Dequeue();
+
+                // 计算均值
+                var avg = queue.Average();
+                var diff = Math.Abs(val / avg - 1);
 
                 // debug输出
                 ShowDebugInfo(img, diff);
 
-                // 阈值判断，特效全开时根据水花判断，特效全关时根据负的亮度变化判断，不知道哪个更合适……
+                // 阈值判断
                 if (diff > m_num阈值 / 100.0)
                 {
                     ShowStatus("上钩了！");
